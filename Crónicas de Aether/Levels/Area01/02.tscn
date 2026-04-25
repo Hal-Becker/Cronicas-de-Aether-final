@@ -1,7 +1,7 @@
 [gd_scene load_steps=33 format=4 uid="uid://chcb2oelfl72f"]
 
 [ext_resource type="Script" uid="uid://d2eyblbal755o" path="res://Levels/scripts/level.gd" id="1_1ohot"]
-[ext_resource type="AudioStream" uid="uid://io7jxqk648xa" path="res://Levels/music/example_music_01.ogg" id="2_5s7x6"]
+[ext_resource type="AudioStream" uid="uid://bg0uwtt8v0qps" path="res://Levels/music/example_music_02.ogg" id="2_s3up8"]
 [ext_resource type="PackedScene" uid="uid://cq32mohonpsw3" path="res://Tile Maps/grass-tiles-01.tscn" id="3_ukscd"]
 [ext_resource type="PackedScene" uid="uid://dr4blo7ya448q" path="res://Levels/player_spawn.tscn" id="4_1fp1i"]
 [ext_resource type="PackedScene" uid="uid://diex2e34r23qo" path="res://Tile Maps/shop_tilemap_layer.tscn" id="4_348be"]
@@ -50,7 +50,7 @@ func quest_complete() -> void:
 [node name="02" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_1ohot")
-music = ExtResource("2_5s7x6")
+music = ExtResource("2_s3up8")
 
 [node name="grass-tiles-01" parent="." instance=ExtResource("3_ukscd")]
 position = Vector2(1, 15)

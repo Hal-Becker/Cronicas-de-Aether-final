@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=4 uid="uid://bip13v2dp0h4v"]
 
 [ext_resource type="Script" uid="uid://d2eyblbal755o" path="res://Levels/scripts/level.gd" id="1_f2653"]
-[ext_resource type="AudioStream" uid="uid://io7jxqk648xa" path="res://Levels/music/example_music_01.ogg" id="2_ylswv"]
+[ext_resource type="AudioStream" uid="uid://bg0uwtt8v0qps" path="res://Levels/music/example_music_02.ogg" id="2_vccp0"]
 [ext_resource type="PackedScene" uid="uid://bixy5g5e5ccvj" path="res://Tile Maps/caves_tiles_01.tscn" id="3_m27p2"]
 [ext_resource type="PackedScene" uid="uid://dr4blo7ya448q" path="res://Levels/player_spawn.tscn" id="8_nenb6"]
 [ext_resource type="PackedScene" uid="uid://vlpiuopcomwi" path="res://Levels/level_transition.tscn" id="9_sj2gg"]
@@ -9,7 +9,7 @@
 [node name="01" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_f2653")
-music = ExtResource("2_ylswv")
+music = ExtResource("2_vccp0")
 
 [node name="LevelTransition" parent="." instance=ExtResource("9_sj2gg")]
 position = Vector2(320, 0)
