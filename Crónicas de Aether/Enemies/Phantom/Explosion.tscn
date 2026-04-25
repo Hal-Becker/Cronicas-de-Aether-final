@@ -1,0 +1,64 @@
+[gd_scene load_steps=8 format=3 uid="uid://btqkpwc5dotbm"]
+
+[ext_resource type="Script" uid="uid://bcpxyxmmngytl" path="res://Enemies/Phantom/Explosion.gd" id="1_qdo1r"]
+[ext_resource type="Texture2D" uid="uid://wdtai2rx3d4r" path="res://Enemies/Phantom/Explosion SpriteSheet.png" id="2_8jiut"]
+[ext_resource type="PackedScene" uid="uid://cpvl4rru3x52v" path="res://GeneralNodes/HurtBox/hurt_box.tscn" id="3_5ali6"]
+
+[sub_resource type="Animation" id="Animation_8jiut"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_qdo1r"]
+resource_name = "explode"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.133333, 0.166667, 0.2, 0.233333, 0.266667, 0.3, 0.333333, 0.366667, 0.4, 0.433333, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5ali6"]
+_data = {
+&"RESET": SubResource("Animation_8jiut"),
+&"explode": SubResource("Animation_qdo1r")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0f0nu"]
+
+[node name="Explosion" type="Node2D"]
+script = ExtResource("1_qdo1r")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_8jiut")
+hframes = 4
+vframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_5ali6")
+}
+
+[node name="HurtBox" parent="." instance=ExtResource("3_5ali6")]
+collision_layer = 256
+damage = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource("CircleShape2D_0f0nu")

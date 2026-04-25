@@ -1,0 +1,305 @@
+[gd_scene load_steps=26 format=4 uid="uid://bnpo242tfas6l"]
+
+[ext_resource type="Script" uid="uid://d2eyblbal755o" path="res://Levels/scripts/level.gd" id="1_gocoa"]
+[ext_resource type="AudioStream" uid="uid://io7jxqk648xa" path="res://Levels/music/example_music_01.ogg" id="2_j4y68"]
+[ext_resource type="PackedScene" uid="uid://bt8nycc2ev1qs" path="res://GeneralNodes/area_trigger/area_trigger.tscn" id="3_6r6fj"]
+[ext_resource type="PackedScene" uid="uid://vlpiuopcomwi" path="res://Levels/level_transition.tscn" id="3_233nq"]
+[ext_resource type="PackedScene" uid="uid://cq32mohonpsw3" path="res://Tile Maps/grass-tiles-01.tscn" id="3_hh5ne"]
+[ext_resource type="PackedScene" uid="uid://dr4blo7ya448q" path="res://Levels/player_spawn.tscn" id="4_8cg85"]
+[ext_resource type="PackedScene" uid="uid://bi8crg3nv50qw" path="res://npc/npc.tscn" id="5_g6g4m"]
+[ext_resource type="Resource" uid="uid://csvi3x1wp3gy6" path="res://npc/00_npcs/npc_01.tres" id="6_86h4m"]
+[ext_resource type="PackedScene" uid="uid://dapdr3ojo2pha" path="res://npc/npc_behavior_wander.tscn" id="7_jnq63"]
+[ext_resource type="PackedScene" uid="uid://b22o8rtjyby8c" path="res://Interactables/dialog/dialog_interaction.tscn" id="8_x30po"]
+[ext_resource type="Script" uid="uid://7qrcj0xrfdwc" path="res://Interactables/dialog/scripts/dialog_text.gd" id="9_bchre"]
+[ext_resource type="Script" uid="uid://ib6a845pd247" path="res://Interactables/dialog/scripts/cutscene_action_music.gd" id="10_4jsar"]
+[ext_resource type="Script" uid="uid://bn3hxd4o1fctj" path="res://Interactables/dialog/scripts/cutscene_action_player.gd" id="10_bchre"]
+[ext_resource type="Script" uid="uid://cgv82amncyx68" path="res://Interactables/dialog/scripts/cutscene_action_camera.gd" id="11_6ays4"]
+[ext_resource type="AudioStream" uid="uid://bss1hbkoufxql" path="res://Levels/music/example_music_03.ogg" id="11_6r6fj"]
+[ext_resource type="Script" uid="uid://0mcihlaufovq" path="res://Interactables/dialog/scripts/dialog_cutscene.gd" id="11_86h4m"]
+[ext_resource type="Resource" uid="uid://cdc3sykvmnn27" path="res://npc/00_npcs/00_hero.tres" id="12_hvxrb"]
+[ext_resource type="Script" uid="uid://cof5epf5dwei1" path="res://Interactables/dialog/scripts/cutscene_action_move.gd" id="12_x30po"]
+[ext_resource type="PackedScene" uid="uid://cf0a8hxch6kfd" path="res://Props/pot/pot.tscn" id="14_bchre"]
+[ext_resource type="Resource" uid="uid://cudmmgdv8d3r6" path="res://npc/00_npcs/npc_03_karina.tres" id="18_1gg17"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hvxrb"]
+size = Vector2(276, 224)
+
+[sub_resource type="Animation" id="Animation_bchre"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DirectionalLight2D:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_x30po"]
+resource_name = "fade_to_black"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DirectionalLight2D:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.5]
+}
+
+[sub_resource type="Animation" id="Animation_jnq63"]
+resource_name = "fade_to_normal"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DirectionalLight2D:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.5, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4jsar"]
+_data = {
+&"RESET": SubResource("Animation_bchre"),
+&"fade_to_black": SubResource("Animation_x30po"),
+&"fade_to_normal": SubResource("Animation_jnq63")
+}
+
+[node name="04_cutscene_test" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_gocoa")
+music = ExtResource("2_j4y68")
+
+[node name="LevelTransition" parent="." instance=ExtResource("3_233nq")]
+position = Vector2(512, 144)
+level = "uid://chcb2oelfl72f"
+target_transition_area = "LevelTransition2"
+size = 8
+side = 1
+
+[node name="AreaTrigger" parent="." instance=ExtResource("3_6r6fj")]
+
+[node name="DialogInteraction" parent="AreaTrigger" instance=ExtResource("8_x30po")]
+position = Vector2(321, 154)
+enabled = false
+
+[node name="DialogCutscene_MOVE" type="Node" parent="AreaTrigger/DialogInteraction"]
+script = ExtResource("11_86h4m")
+npc_info = ExtResource("18_1gg17")
+metadata/_custom_type_script = "uid://0mcihlaufovq"
+
+[node name="CutsceneActionMusic" type="Node2D" parent="AreaTrigger/DialogInteraction/DialogCutscene_MOVE"]
+script = ExtResource("10_4jsar")
+track = ExtResource("11_6r6fj")
+metadata/_custom_type_script = "uid://ib6a845pd247"
+
+[node name="CutsceneActionMove" type="Node2D" parent="AreaTrigger/DialogInteraction/DialogCutscene_MOVE" node_paths=PackedStringArray("object_to_move")]
+position = Vector2(355, 66)
+script = ExtResource("12_x30po")
+timing_method = 1
+object_to_move = NodePath("../../../../NPC")
+move_speed = 80.0
+metadata/_custom_type_script = "uid://cof5epf5dwei1"
+
+[node name="CutsceneActionMove2" type="Node2D" parent="AreaTrigger/DialogInteraction/DialogCutscene_MOVE" node_paths=PackedStringArray("object_to_move")]
+position = Vector2(417, 66)
+script = ExtResource("12_x30po")
+timing_method = 1
+object_to_move = NodePath("../../../../NPC")
+move_speed = 80.0
+metadata/_custom_type_script = "uid://cof5epf5dwei1"
+
+[node name="CutsceneActionMove3" type="Node2D" parent="AreaTrigger/DialogInteraction/DialogCutscene_MOVE" node_paths=PackedStringArray("object_to_move")]
+position = Vector2(425, 102)
+script = ExtResource("12_x30po")
+timing_method = 1
+object_to_move = NodePath("../../../../NPC")
+move_speed = 80.0
+metadata/_custom_type_script = "uid://cof5epf5dwei1"
+
+[node name="DialogText" type="Node" parent="AreaTrigger/DialogInteraction"]
+script = ExtResource("9_bchre")
+text = "Tú, joven héroe. Ven aquí,
+y déjame mirarte a los ojos..."
+npc_info = ExtResource("18_1gg17")
+
+[node name="DialogCutscene_MOVE2" type="Node" parent="AreaTrigger/DialogInteraction"]
+script = ExtResource("11_86h4m")
+playback_mode = 0
+npc_info = ExtResource("6_86h4m")
+metadata/_custom_type_script = "uid://0mcihlaufovq"
+
+[node name="CutsceneActionPlayer" type="Node2D" parent="AreaTrigger/DialogInteraction/DialogCutscene_MOVE2"]
+position = Vector2(425, 125)
+script = ExtResource("10_bchre")
+timing_method = 1
+metadata/_custom_type_script = "uid://bn3hxd4o1fctj"
+
+[node name="CutsceneActionCamera" type="Node2D" parent="AreaTrigger/DialogInteraction/DialogCutscene_MOVE2"]
+position = Vector2(366, 111)
+script = ExtResource("11_6ays4")
+metadata/_custom_type_script = "uid://cgv82amncyx68"
+
+[node name="DialogText2" type="Node" parent="AreaTrigger/DialogInteraction"]
+script = ExtResource("9_bchre")
+text = "
+Sí... ya veo..."
+npc_info = ExtResource("18_1gg17")
+
+[node name="DialogText3" type="Node" parent="AreaTrigger/DialogInteraction"]
+script = ExtResource("9_bchre")
+text = "En efecto, hay poder dentro de ti...
+Siento el Aether recorriendo tus venas."
+npc_info = ExtResource("18_1gg17")
+
+[node name="DialogText4" type="Node" parent="AreaTrigger/DialogInteraction"]
+script = ExtResource("9_bchre")
+text = "
+¿Has prestado el juramento del guerrero?"
+npc_info = ExtResource("18_1gg17")
+
+[node name="DialogText5" type="Node" parent="AreaTrigger/DialogInteraction"]
+script = ExtResource("9_bchre")
+text = "Debe ser por esta misteriosa espada, la encontré en una cueva antes. "
+npc_info = ExtResource("12_hvxrb")
+
+[node name="DialogText6" type="Node" parent="AreaTrigger/DialogInteraction"]
+script = ExtResource("9_bchre")
+text = "[shake]¡Por los pelos de la cuca de mi abuela![/shake]
+Esa es la espada legendaria capaz de acabar con el mal."
+npc_info = ExtResource("18_1gg17")
+
+[node name="DialogText7" type="Node" parent="AreaTrigger/DialogInteraction"]
+script = ExtResource("9_bchre")
+text = "
+¿La espada legendaria?"
+npc_info = ExtResource("12_hvxrb")
+
+[node name="DialogText8" type="Node" parent="AreaTrigger/DialogInteraction"]
+script = ExtResource("9_bchre")
+text = "Si, se dice que es capaz de otorgar un poder sin igual a quien elige."
+npc_info = ExtResource("18_1gg17")
+
+[node name="DialogText9" type="Node" parent="AreaTrigger/DialogInteraction"]
+script = ExtResource("9_bchre")
+text = "¿Poder? ¿Como puedes probar eso? Me siento normal."
+npc_info = ExtResource("12_hvxrb")
+
+[node name="DialogText10" type="Node" parent="AreaTrigger/DialogInteraction"]
+script = ExtResource("9_bchre")
+text = "Tal vez, si pudieras enviar esta olla por encima de esas colinas. Semejante hazaña demostraría que eres el elegido."
+npc_info = ExtResource("18_1gg17")
+
+[node name="DialogText11" type="Node" parent="AreaTrigger/DialogInteraction"]
+script = ExtResource("9_bchre")
+text = "Lo intentaré, pero no prometo nada."
+npc_info = ExtResource("12_hvxrb")
+
+[node name="DialogCutscene_MOVE3" type="Node" parent="AreaTrigger/DialogInteraction"]
+script = ExtResource("11_86h4m")
+npc_info = ExtResource("6_86h4m")
+metadata/_custom_type_script = "uid://0mcihlaufovq"
+
+[node name="CutsceneActionPlayer" type="Node2D" parent="AreaTrigger/DialogInteraction/DialogCutscene_MOVE3"]
+position = Vector2(392, 119)
+script = ExtResource("10_bchre")
+timing_method = 1
+move_speed = 50.0
+animation_speed_factor = 50.0
+metadata/_custom_type_script = "uid://bn3hxd4o1fctj"
+
+[node name="DialogCutscene_MOVE5" type="Node" parent="AreaTrigger/DialogInteraction"]
+script = ExtResource("11_86h4m")
+npc_info = ExtResource("6_86h4m")
+metadata/_custom_type_script = "uid://0mcihlaufovq"
+
+[node name="CutsceneActionPlayer" type="Node2D" parent="AreaTrigger/DialogInteraction/DialogCutscene_MOVE5"]
+position = Vector2(397, 119)
+script = ExtResource("10_bchre")
+finish_direction = "right"
+timing_method = 1
+move_speed = 50.0
+animation_speed_factor = 50.0
+metadata/_custom_type_script = "uid://bn3hxd4o1fctj"
+
+[node name="DialogCutscene_MOVE4" type="Node" parent="AreaTrigger/DialogInteraction"]
+script = ExtResource("11_86h4m")
+playback_mode = 0
+npc_info = ExtResource("6_86h4m")
+metadata/_custom_type_script = "uid://0mcihlaufovq"
+
+[node name="CutsceneActionPlayer2" type="Node2D" parent="AreaTrigger/DialogInteraction/DialogCutscene_MOVE4"]
+position = Vector2(392, 119)
+script = ExtResource("10_bchre")
+animation_name = "attack"
+move_duration = 0.3
+scale_animation_with_movement = false
+metadata/_custom_type_script = "uid://bn3hxd4o1fctj"
+
+[node name="CutsceneActionMove" type="Node2D" parent="AreaTrigger/DialogInteraction/DialogCutscene_MOVE4" node_paths=PackedStringArray("object_to_move")]
+position = Vector2(392, -87)
+script = ExtResource("12_x30po")
+timing_method = 1
+object_to_move = NodePath("../../../../Pot")
+move_speed = 400.0
+metadata/_custom_type_script = "uid://cof5epf5dwei1"
+
+[node name="DialogText12" type="Node" parent="AreaTrigger/DialogInteraction"]
+script = ExtResource("9_bchre")
+text = "¡Guau, eres un tipo increíble y muy sorprendente, no cabe duda que eres el elegido!"
+npc_info = ExtResource("18_1gg17")
+metadata/_custom_type_script = "uid://7qrcj0xrfdwc"
+
+[node name="DialogText13" type="Node" parent="AreaTrigger/DialogInteraction"]
+script = ExtResource("9_bchre")
+text = "¿Qué? Tu actitud y tu forma de hablar han cambiado por completo. ¿Quién eres en realidad?"
+npc_info = ExtResource("12_hvxrb")
+metadata/_custom_type_script = "uid://7qrcj0xrfdwc"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaTrigger"]
+position = Vector2(378, 144)
+shape = SubResource("RectangleShape2D_hvxrb")
+
+[node name="grass-tiles-01" parent="." instance=ExtResource("3_hh5ne")]
+tile_map_data = PackedByteArray("AAAAAP//AAACAAUAAAAAAAAAAAACAAYAAAAAAAEAAAANAAQAAAAAAAIAAAANAAUAAAAAAAMAAAANAAUAAAAAAAQAAAANAAUAAAAAAAUAAAANAAUAAAAAAAYAAAANAAUAAAAAAAcAAAANAAUAAAAAAAgAAAANAAUAAAABAP//AAADAAUAAAABAAAAAAADAAYAAAABAAEAAAAOAAQAAAABAAIAAAAOAAUAAAABAAMAAAAOAAUAAAABAAQAAAAOAAUAAAABAAUAAAAOAAUAAAABAAYAAAAOAAUAAAABAAcAAAAOAAUAAAABAAgAAAAOAAUAAAACAP//AAAEAAUAAAACAAAAAAAEAAYAAAACAAEAAAACAAAAAAACAAIAAAACAAAAAAACAAMAAAACAAAAAAACAAQAAAACAAAAAAACAAUAAAACAAAAAAACAAYAAAACAAAAAAACAAcAAAACAAAAAAADAP//AAACAAUAAAADAAAAAAACAAYAAAADAAEAAAAAAAAAAAADAAIAAAAAAAAAAAADAAMAAAAAAAAAAAADAAQAAAAAAAAAAAADAAUAAAAAAAAAAAADAAYAAAAAAAAAAAADAAcAAAAAAAAAAAAEAP//AAADAAUAAAAEAAAAAAADAAYAAAAEAAEAAAABAAAAAAAEAAIAAAABAAAAAAAEAAMAAAABAAAAAAAEAAQAAAABAAAAAAAEAAUAAAACAAEAAAAEAAYAAAABAAAAAAAEAAcAAAABAAAAAAAFAP//AAAEAAUAAAAFAAAAAAAEAAYAAAAFAAEAAAACAAAAAAAFAAIAAAACAAAAAAAFAAMAAAACAAAAAAAFAAQAAAACAAAAAAAFAAUAAAACAAAAAAAFAAYAAAACAAAAAAAFAAcAAAACAAAAAAAGAP//AAACAAUAAAAGAAAAAAACAAYAAAAGAAEAAAAAAAAAAAAGAAIAAAAAAAAAAAAGAAMAAAAAAAAAAAAGAAQAAAAAAAAAAAAGAAUAAAAAAAAAAAAGAAYAAAAAAAAAAAAGAAcAAAAAAAAAAAAGAAgAAAALAAQAAAAHAP//AAADAAUAAAAHAAAAAAADAAYAAAAHAAEAAAABAAAAAAAHAAIAAAABAAAAAAAHAAMAAAABAAAAAAAHAAQAAAABAAAAAAAHAAUAAAABAAAAAAAHAAYAAAABAAAAAAAHAAcAAAABAAAAAAAHAAgAAAAMAAQAAAAIAP//AAAEAAUAAAAIAAAAAAAEAAYAAAAIAAEAAAACAAAAAAAIAAIAAAACAAAAAAAIAAMAAAACAAAAAAAIAAQAAAACAAAAAAAIAAUAAAACAAAAAAAIAAYAAAACAAAAAAAIAAcAAAACAAAAAAAIAAgAAAANAAQAAAAJAP//AAACAAUAAAAJAAAAAAACAAYAAAAJAAEAAAAAAAAAAAAJAAIAAAAAAAAAAAAJAAMAAAAAAAAAAAAJAAQAAAAAAAAAAAAJAAUAAAAAAAAAAAAJAAYAAAAAAAAAAAAJAAcAAAAAAAAAAAAJAAgAAAALAAQAAAAKAP//AAADAAUAAAAKAAAAAAADAAYAAAAKAAEAAAABAAAAAAAKAAIAAAABAAAAAAAKAAMAAAABAAAAAAAKAAQAAAABAAAAAAAKAAUAAAABAAAAAAAKAAYAAAABAAAAAAAKAAcAAAABAAAAAAAKAAgAAAAMAAQAAAALAP//AAAEAAUAAAALAAAAAAAEAAYAAAALAAEAAAACAAAAAAALAAIAAAACAAAAAAALAAMAAAACAAAAAAALAAQAAAACAAAAAAALAAUAAAACAAAAAAALAAYAAAACAAAAAAALAAcAAAACAAAAAAALAAgAAAANAAQAAAAMAP//AAACAAUAAAAMAAAAAAACAAYAAAAMAAEAAAAAAAAAAAAMAAIAAAAAAAAAAAAMAAMAAAAAAAAAAAAMAAQAAAAAAAAAAAAMAAUAAAAAAAAAAAAMAAYAAAAAAAAAAAAMAAcAAAAAAAAAAAAMAAgAAAALAAQAAAANAP//AAADAAUAAAANAAAAAAADAAYAAAANAAEAAAABAAAAAAANAAIAAAABAAAAAAANAAMAAAABAAAAAAANAAQAAAABAAAAAAANAAUAAAABAAAAAAANAAYAAAABAAAAAAANAAcAAAABAAAAAAANAAgAAAAMAAQAAAAOAP//AAAEAAUAAAAOAAAAAAAEAAYAAAAOAAEAAAACAAAAAAAOAAIAAAACAAAAAAAOAAMAAAACAAAAAAAOAAQAAAACAAAAAAAOAAUAAAACAAAAAAAOAAYAAAACAAAAAAAOAAcAAAACAAAAAAAOAAgAAAANAAQAAAAPAP//AAACAAUAAAAPAAAAAAACAAYAAAAPAAEAAAAAAAAAAAAPAAIAAAAAAAAAAAAPAAMAAAAAAAAAAAAPAAQAAAAAAAAAAAAPAAUAAAAAAAAAAAAPAAYAAAAAAAAAAAAPAAcAAAAAAAAAAAAPAAgAAAALAAQAAAAQAP//AAADAAUAAAAQAAAAAAADAAYAAAAQAAgAAAAMAAQAAAAQAAEAAAADAAEAAAAQAAIAAAAAAAMAAAAQAAMAAAABAAEAAAAQAAQAAAAAAAIAAAAQAAUAAAACAAMAAAAQAAYAAAAAAAEAAAAQAAcAAAAAAAMAAAACAAgAAAABAAIAAAADAAgAAAABAAIAAAAEAAgAAAABAAIAAAAFAAgAAAABAAIAAAA=")
+
+[node name="PlayerSpawn" parent="." instance=ExtResource("4_8cg85")]
+position = Vector2(87, 173)
+
+[node name="NPC" parent="." instance=ExtResource("5_g6g4m")]
+position = Vector2(317.503, 181.04)
+npc_resource = ExtResource("18_1gg17")
+
+[node name="NpcBehaviorWander" parent="NPC" instance=ExtResource("7_jnq63")]
+wander_range = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_4jsar")
+}
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+energy = 0.0
+blend_mode = 1
+
+[node name="Pot" parent="." instance=ExtResource("14_bchre")]
+position = Vector2(392, 104)
+
+[node name="LevelTransition2" parent="." instance=ExtResource("3_233nq")]
+position = Vector2(128, 256)
+level = "uid://bip13v2dp0h4v"
+size = 4
+side = 3

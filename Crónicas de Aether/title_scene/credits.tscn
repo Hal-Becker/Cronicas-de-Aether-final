@@ -1,0 +1,50 @@
+[gd_scene load_steps=2 format=3 uid="uid://cm7wmuc7ee4nw"]
+
+[ext_resource type="Script" uid="uid://swmoculcngju" path="res://title_scene/credits.gd" id="1_ioh21"]
+
+[node name="Credits" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_ioh21")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 165.0
+offset_top = 7.0
+offset_right = 322.0
+offset_bottom = 257.0
+
+[node name="Juego Completado" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Juego Completado"
+horizontal_alignment = 1
+
+[node name="Creditos" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Karina Grullón
+Abel Rodríguez
+Eliam Jiménez
+Carlos Torres
+Profesor: Isaias Castillo
+
+"
+horizontal_alignment = 1
+
+[node name="BtnContinue" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Continuar"
+
+[node name="BtnMenu" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Volcer al menú"

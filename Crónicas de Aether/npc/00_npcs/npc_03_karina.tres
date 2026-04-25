@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="NPCResource" load_steps=4 format=3 uid="uid://cudmmgdv8d3r6"]
+
+[ext_resource type="Script" uid="uid://vdkoe1ao4p7n" path="res://npc/scripts/npc_resource.gd" id="1_8yc3a"]
+[ext_resource type="Texture2D" uid="uid://dvlha1bbmm61x" path="res://npc/sprites/portraits/karina1 (1).png" id="1_o3c4j"]
+[ext_resource type="Texture2D" uid="uid://2701oi0fk3t0" path="res://npc/sprites/npc_sprite.png" id="3_bhgc5"]
+
+[resource]
+script = ExtResource("1_8yc3a")
+npc_name = "Karina Sanchez"
+sprite = ExtResource("3_bhgc5")
+portrait = ExtResource("1_o3c4j")
+dialog_audio_pitch = 0.5
+metadata/_custom_type_script = "uid://vdkoe1ao4p7n"

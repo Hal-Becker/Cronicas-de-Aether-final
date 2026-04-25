@@ -1,0 +1,157 @@
+[gd_scene load_steps=14 format=4 uid="uid://5t7fprdld7j"]
+
+[ext_resource type="Script" uid="uid://c2mayusmuuk6r" path="res://title_scene/title_scene.gd" id="1_lt026"]
+[ext_resource type="AudioStream" uid="uid://cph6d67x0q2hx" path="res://title_scene/audio/waves.mp3" id="2_1kmx1"]
+[ext_resource type="PackedScene" uid="uid://b4jqibhvnwmda" path="res://Interactables/dungeon/pushable_statue.tscn" id="2_e3llm"]
+[ext_resource type="AudioStream" uid="uid://bs7rsijo2pb3f" path="res://title_scene/audio/menu_focus.wav" id="3_w8rst"]
+[ext_resource type="AudioStream" uid="uid://08aqunggwta1" path="res://title_scene/audio/menu_select.wav" id="4_i0vak"]
+[ext_resource type="PackedScene" uid="uid://dr4blo7ya448q" path="res://Levels/player_spawn.tscn" id="5_e557l"]
+[ext_resource type="PackedScene" uid="uid://bcskysr5no5a6" path="res://Tile Maps/dungeon_tiles_01.tscn" id="5_gqgka"]
+[ext_resource type="Texture2D" uid="uid://ckr72008bqm4i" path="res://title_scene/sprites/titulo2.0.png" id="7_lj5tl"]
+[ext_resource type="PackedScene" uid="uid://dhr1wkvl1431s" path="res://title_scene/splash_scene.tscn" id="8_hlrge"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lj5tl"]
+atlas = ExtResource("7_lj5tl")
+region = Rect2(0, 20, 1536, 893)
+
+[sub_resource type="Animation" id="Animation_dt7ym"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_qq4i3"]
+resource_name = "default"
+length = 5.0
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.13, 0.26, 0.39, 0.52, 0.65, 0.78, 0.91, 1.04, 1.17, 1.3, 1.43, 1.56, 1.69, 1.82, 1.95, 2.08, 2.21, 2.34, 2.47, 2.6, 2.73, 2.86, 2.99, 3.12, 3.25, 3.38, 3.51, 3.64, 3.77, 3.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vfnot"]
+_data = {
+&"RESET": SubResource("Animation_dt7ym"),
+&"default": SubResource("Animation_qq4i3")
+}
+
+[node name="TitleScene" type="Node2D"]
+script = ExtResource("1_lt026")
+music = ExtResource("2_1kmx1")
+button_focus_audio = ExtResource("3_w8rst")
+button_press_audio = ExtResource("4_i0vak")
+
+[node name="Dungeon Tiles 01" parent="." instance=ExtResource("5_gqgka")]
+tile_map_data = PackedByteArray("AAD/////AQAMAAcAAAD//wAAAQAMAAcAAAD//wEAAQAMAAcAAAD//wIAAQAMAAcAAAD//wMAAQAEAAUAAAD//wQAAQAEAAYAAAD//wUAAQAEAAcAAAD//wYAAQABAAIAAAD//wcAAQAAAAEAAAD//wgAAQAAAAcAAAD//wkAAQAMAAcAAAAAAP//AQAMAAcAAAAAAAAAAQAMAAcAAAAAAAEAAQAMAAcAAAAAAAIAAQAMAAcAAAAAAAMAAQAHAAUAAAAAAAQAAQAHAAYAAAAAAAUAAQAHAAcAAAAAAAYAAQADAAEAAAAAAAcAAQADAAIAAAAAAAgAAQADAAcAAAAAAAkAAQAMAAcAAAABAP//AQAMAAcAAAABAAAAAQAJAAAAAAABAAEAAQAJAAEAAAABAAIAAQAJAAIAAAABAAMAAQADAAQAAAABAAQAAQAMAAEAAAABAAUAAQAMAAIAAAABAAYAAQABAAEAAAABAAcAAQADAAEAAAABAAgAAQAMAAYAAAABAAkAAQAMAAcAAAACAP//AQAMAAcAAAACAAAAAQAKAAAAAAACAAEAAQAKAAEAAAACAAIAAQAKAAIAAAACAAMAAQAKAAMAAAACAAQAAQAHAAMAAAACAAUAAQAHAAQAAAACAAYAAQADAAIAAAACAAcAAQACAAAAAAACAAgAAQAMAAYAAAACAAkAAQAMAAcAAAADAP//AQAMAAcAAAADAAAAAQALAAAAAAADAAEAAQALAAEAAAADAAIAAQALAAIAAAADAAMAAQALAAMAAAADAAQAAQAIAAMAAAADAAUAAQAIAAQAAAADAAYAAQACAAIAAAADAAcAAQACAAAAAAADAAgAAQAMAAYAAAADAAkAAQAMAAcAAAAEAP//AQAMAAcAAAAEAAAAAQAEAAUAAAAEAAEAAQAEAAYAAAAEAAIAAQAEAAcAAAAEAAMAAQAAAAAAAAAEAAQAAQABAAEAAAAEAAUAAQADAAAAAAAEAAYAAQACAAAAAAAEAAcAAQADAAEAAAAEAAgAAQAAAAcAAAAEAAkAAQAMAAcAAAAFAP//AQAMAAcAAAAFAAAAAQAHAAUAAAAFAAEAAQAHAAYAAAAFAAIAAQAHAAcAAAAFAAMAAQAAAAIAAAAFAAQAAQAAAAAAAAAFAAUAAQADAAAAAAAFAAYAAQAAAAIAAAAFAAcAAQABAAEAAAAFAAgAAQADAAcAAAAFAAkAAQAMAAcAAAAGAP//AQAMAAcAAAAGAAAAAQAMAAAAAAAGAAEAAQAMAAEAAAAGAAIAAQAMAAIAAAAGAAMAAQACAAEAAAAGAAQAAQAAAAAAAAAGAAUAAQAAAAEAAAAGAAYAAQABAAEAAAAGAAcAAQABAAIAAAAGAAgAAQAMAAYAAAAGAAkAAQAMAAcAAAAHAP//AQAMAAcAAAAHAAAAAQAMAAAAAAAHAAEAAQAMAAEAAAAHAAIAAQAMAAIAAAAHAAMAAQABAAIAAAAHAAQAAQABAAEAAAAHAAUAAQADAAAAAAAHAAYAAQACAAEAAAAHAAcAAQABAAAAAAAHAAgAAQAMAAYAAAAHAAkAAQAMAAcAAAAIAP//AQAMAAcAAAAIAAAAAQAMAAAAAAAIAAEAAQAMAAEAAAAIAAIAAQAMAAIAAAAIAAMAAQADAAEAAAAIAAQAAQACAAIAAAAIAAUAAQACAAAAAAAIAAYAAQADAAAAAAAIAAcAAQABAAEAAAAIAAgAAQAMAAYAAAAIAAkAAQAMAAcAAAAJAP//AQAMAAcAAAAJAAAAAQAEAAUAAAAJAAEAAQAEAAYAAAAJAAIAAQAEAAcAAAAJAAMAAQADAAIAAAAJAAQAAQABAAIAAAAJAAUAAQACAAEAAAAJAAYAAQABAAIAAAAJAAcAAQACAAIAAAAJAAgAAQAAAAcAAAAJAAkAAQAMAAcAAAAKAP//AQAMAAcAAAAKAAAAAQAHAAUAAAAKAAEAAQAHAAYAAAAKAAIAAQAHAAcAAAAKAAMAAQABAAEAAAAKAAQAAQADAAEAAAAKAAUAAQACAAIAAAAKAAYAAQAAAAAAAAAKAAcAAQACAAEAAAAKAAgAAQADAAcAAAAKAAkAAQAMAAcAAAALAP//AQAMAAcAAAALAAAAAQANAAAAAAALAAEAAQANAAEAAAALAAIAAQANAAIAAAALAAMAAQANAAMAAAALAAQAAQAEAAMAAAALAAUAAQAEAAQAAAALAAYAAQACAAEAAAALAAcAAQACAAEAAAALAAgAAQAMAAYAAAALAAkAAQAMAAcAAAAMAP//AQAMAAcAAAAMAAAAAQAOAAAAAAAMAAEAAQAOAAEAAAAMAAIAAQAOAAIAAAAMAAMAAQAOAAMAAAAMAAQAAQAFAAMAAAAMAAUAAQAFAAQAAAAMAAYAAQADAAAAAAAMAAcAAQADAAIAAAAMAAgAAQAMAAYAAAAMAAkAAQAMAAcAAAANAP//AQAMAAcAAAANAAAAAQAPAAAAAAANAAEAAQAPAAEAAAANAAIAAQAPAAIAAAANAAMAAQACAAQAAAANAAQAAQAMAAEAAAANAAUAAQAMAAIAAAANAAYAAQADAAIAAAANAAcAAQADAAIAAAANAAgAAQAMAAYAAAANAAkAAQAMAAcAAAAOAP//AQAMAAcAAAAOAAAAAQAMAAcAAAAOAAEAAQAMAAcAAAAOAAIAAQAMAAcAAAAOAAMAAQAEAAUAAAAOAAQAAQAEAAYAAAAOAAUAAQAEAAcAAAAOAAYAAQABAAAAAAAOAAcAAQACAAIAAAAOAAgAAQAAAAcAAAAOAAkAAQAMAAcAAAAPAP//AQAMAAcAAAAPAAAAAQAMAAcAAAAPAAEAAQAMAAcAAAAPAAIAAQAMAAcAAAAPAAMAAQAHAAUAAAAPAAQAAQAHAAYAAAAPAAUAAQAHAAcAAAAPAAYAAQABAAIAAAAPAAcAAQABAAIAAAAPAAgAAQADAAcAAAAPAAkAAQAMAAcAAAA=")
+
+[node name="Props" type="Node2D" parent="."]
+
+[node name="PushableStatue" parent="Props" instance=ExtResource("2_e3llm")]
+position = Vector2(63, 200)
+
+[node name="PushableStatue2" parent="Props" instance=ExtResource("2_e3llm")]
+position = Vector2(415, 200)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+process_mode = 3
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.516)
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control"]
+position = Vector2(247, 108)
+texture = SubResource("AtlasTexture_lj5tl")
+hframes = 4
+vframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/Sprite2D"]
+libraries = {
+&"": SubResource("AnimationLibrary_vfnot")
+}
+autoplay = "default"
+
+[node name="ButtonNew" type="Button" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -66.0
+offset_top = 38.0
+offset_right = 66.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Nuevo Juego"
+
+[node name="ButtonContinue" type="Button" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -66.0
+offset_top = 68.0
+offset_right = 66.0
+offset_bottom = 94.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Continuar"
+
+[node name="SplashScene" parent="CanvasLayer" instance=ExtResource("8_hlrge")]
+
+[node name="PlayerSpawn" parent="." instance=ExtResource("5_e557l")]
+position = Vector2(240, 139)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+max_polyphony = 4
+
+[node name="Label" type="Label" parent="."]
+offset_left = 4.0
+offset_top = 199.0
+offset_right = 171.0
+offset_bottom = 250.0
+text = "Karina Grullón 1-22-7869
+Eliam Jiménez  1-22-7873"
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 308.0
+offset_top = 202.0
+offset_right = 478.0
+offset_bottom = 253.0
+text = "Abel Rodríguez 1-21-7935
+Carlos Torres  1-22-7963"

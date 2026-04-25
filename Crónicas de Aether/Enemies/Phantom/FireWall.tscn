@@ -1,0 +1,68 @@
+[gd_scene load_steps=8 format=3 uid="uid://djfs0j84wruau"]
+
+[ext_resource type="Script" uid="uid://cmjqxroqojmfb" path="res://Enemies/Phantom/FireWall.gd" id="1_nw8o7"]
+[ext_resource type="Texture2D" uid="uid://dka6p8cat41w5" path="res://Enemies/Phantom/Group 4 - 4.png" id="2_q2ytv"]
+[ext_resource type="PackedScene" uid="uid://cpvl4rru3x52v" path="res://GeneralNodes/HurtBox/hurt_box.tscn" id="3_oatai"]
+
+[sub_resource type="Animation" id="Animation_dfwht"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_u1aqu"]
+resource_name = "fire"
+length = 0.55
+loop_mode = 1
+step = 0.0429
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0434783, 0.0869565, 0.130435, 0.173913, 0.217391, 0.26087, 0.304348, 0.347826, 0.391304, 0.434783, 0.478261, 0.521739),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_npny8"]
+_data = {
+&"RESET": SubResource("Animation_dfwht"),
+&"fire": SubResource("Animation_u1aqu")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nw8o7"]
+radius = 13.0
+
+[node name="FireWall" type="Node2D"]
+script = ExtResource("1_nw8o7")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -30)
+texture = ExtResource("2_q2ytv")
+hframes = 14
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_npny8")
+}
+
+[node name="HurtBox" parent="." instance=ExtResource("3_oatai")]
+collision_layer = 256
+damage = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(-1, -9)
+shape = SubResource("CircleShape2D_nw8o7")

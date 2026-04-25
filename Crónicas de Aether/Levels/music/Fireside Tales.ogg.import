@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://y0tlohw481bx"
+path="res://.godot/imported/Fireside Tales.ogg-884580e012173f9b8e63e0b2de5eb98c.oggvorbisstr"
+
+[deps]
+
+source_file="res://Levels/music/Fireside Tales.ogg"
+dest_files=["res://.godot/imported/Fireside Tales.ogg-884580e012173f9b8e63e0b2de5eb98c.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
